@@ -8,8 +8,14 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
+        # Here each node version is being run on 2 different operating systems
+        # Hence there will 6 jobs created in this workflow
         node-version: [12, 14, 16]
         operating-system: [ubuntu-latest, windows-latest]
+        # We wish to run only 1 combination we can use the 'include' key
+        include:
+            - node-version: 18
+              operating-system: ubuntu-latest
     runs-on: ${{ matrix.operating-system }}
     steps:
       - name: Get Code
