@@ -86,4 +86,3 @@ jobs:
       - name: Output information after all jobs have run
         run: |
           echo "Something went wrong"
-          echo ${{ github.job }}
