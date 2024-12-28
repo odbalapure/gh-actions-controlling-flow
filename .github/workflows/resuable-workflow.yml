@@ -1,10 +1,22 @@
 name: A re-usable worflow
-on: workflow_call
+on:
+    workflow_call:
+        # 'inputs' is reserved keyword and a 'github actions context'
+        inputs:
+            artifact-name:
+                required: false
+                description: The name of the artifact file to download
+                default: dist
+                type: string
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Output contents
-        run: ls
-      - name: Deploy
-        run: echo "Deploying with the help of re-usable workflow..."
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Get build artifacts
+            uses: actions/download-artifact@v3
+            with:
+              name: ${{ inputs.artifact-name }}
+          - name: Output contents
+            run: ls
+          - name: Deploy
+            run: echo "Deploying..."
